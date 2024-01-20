@@ -170,8 +170,8 @@ public class MainPhase {
         flagIDs = new int[6];
 
         // Buy global upgrade (prioritize attack -> capturing -> healing)
-        if(rc.canBuyGlobal(GlobalUpgrade.ATTACK)) {
-            rc.buyGlobal(GlobalUpgrade.ATTACK);
+        if(rc.canBuyGlobal(GlobalUpgrade.ACTION)) {
+            rc.buyGlobal(GlobalUpgrade.ACTION);
         } 
         else if(rc.canBuyGlobal(GlobalUpgrade.CAPTURING)) {
             rc.buyGlobal(GlobalUpgrade.CAPTURING);

@@ -1,4 +1,4 @@
-package lectureplayer;
+package dinoboxer;
 
 import battlecode.common.*;
 

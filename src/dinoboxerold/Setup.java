@@ -1,4 +1,4 @@
-package dinoboxer;
+package dinoboxerold;
 
 import battlecode.common.*;
 
@@ -23,10 +23,8 @@ public class Setup {
         }
         else {
             //try to place flag if it is far enough away from other flags
-            if (rc.hasFlag()){
-                if(rc.senseLegalStartingFlagPlacement(rc.getLocation())) {
-                    if(rc.canDropFlag(rc.getLocation())) rc.dropFlag(rc.getLocation());
-                }
+            if(rc.senseLegalStartingFlagPlacement(rc.getLocation())) {
+                if(rc.canDropFlag(rc.getLocation())) rc.dropFlag(rc.getLocation());
             }
             //move towards flags and place defenses around them
             FlagInfo[] flags = rc.senseNearbyFlags(-1);
