@@ -21,7 +21,6 @@ public class Pathfind {
         
         // move forward if possible, if not, try to go right or left but still towards target
         Direction dir = rc.getLocation().directionTo(loc);
-        rc.setIndicatorString(dir.toString());
         if(fill & rc.canFill(rc.getLocation().add(dir))) rc.fill(rc.getLocation().add(dir));
 
         if(rc.canMove(dir)) rc.move(dir);
@@ -142,7 +141,6 @@ public class Pathfind {
                 }
             }
         }
-        rc.setIndicatorString(bugState + bugDir.toString());
     }
 
     public static void bugNavZero(RobotController rc, MapLocation destination) throws GameActionException{
