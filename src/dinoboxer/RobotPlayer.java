@@ -109,7 +109,7 @@ public class RobotPlayer {
                 }
             }
         }
-        else{
+        if (!rc.isSpawned()){
             for (MapLocation loc : spawnLocs) {
                 if (rc.canSpawn(loc)) {
                     rc.spawn(loc);

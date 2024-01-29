@@ -62,9 +62,24 @@ public class MainPhase {
                     rc.attack(robot.getLocation());
             }
         }
-        for (RobotInfo robot : nearbyEnemies) {
-            if (rc.canAttack(robot.getLocation())) {
-                rc.attack(robot.getLocation());
+        MapLocation[] enemyLocs = new MapLocation[nearbyEnemies.length];
+        for (int i = 0; i < nearbyEnemies.length; i++){
+            enemyLocs[i] = nearbyEnemies[i].getLocation();
+        }
+        MapLocation closestEnemy = findClosestLocation(rc.getLocation(), Arrays.asList(enemyLocs));
+        if (closestEnemy != null){
+            if (rc.getLocation().distanceSquaredTo(closestEnemy) > 4){ // approach to attack
+                if (rc.canMove(rc.getLocation().directionTo(closestEnemy))){
+                    rc.move(rc.getLocation().directionTo(closestEnemy));
+                }
+            }
+            if (rc.canAttack(closestEnemy)) {
+                rc.attack(closestEnemy);
+            }
+            if (rc.getLocation().distanceSquaredTo(closestEnemy) <= 4){ // retreat after attacking to prevent enemy attack
+                if (rc.canMove(rc.getLocation().directionTo(closestEnemy).opposite())){
+                    rc.move(rc.getLocation().directionTo(closestEnemy).opposite());
+                }
             }
         }
     }
