@@ -99,11 +99,22 @@ public class RobotPlayer {
     }
 
     private static void trySpawn(RobotController rc) throws GameActionException {
-        MapLocation[] spawnLocs = rc.getAllySpawnLocations();
-        for (MapLocation loc : spawnLocs) {
-            if (rc.canSpawn(loc)) {
-                rc.spawn(loc);
-                break;
+        MapLocation[] spawnLocs = rc.getAllySpawnLocations(); // prioritize spawn at danger areas
+        MapLocation warnLoc = Communication.getLocation(rc, Communication.FLAG_WARNING_IDX);
+        if (warnLoc != null){
+            for (MapLocation loc : spawnLocs) {
+                if (loc.equals(warnLoc) && rc.canSpawn(loc)) {
+                    rc.spawn(loc);
+                    break;
+                }
+            }
+        }
+        else{
+            for (MapLocation loc : spawnLocs) {
+                if (rc.canSpawn(loc)) {
+                    rc.spawn(loc);
+                    break;
+                }
             }
         }
     }

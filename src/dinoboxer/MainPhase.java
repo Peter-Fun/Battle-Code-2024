@@ -104,23 +104,18 @@ public class MainPhase {
     public static void runGuardian(RobotController rc, RobotInfo[] nearbyEnemies) throws GameActionException {
         // Always move towards home location (spawn zone center)
         MapLocation homeLoc = RobotPlayer.centers.get(RobotPlayer.guardianID);
-        if (rc.senseNearbyFlags(-1, rc.getTeam()).length == 0){ // flag is gone, nothing to defend, become attacker
-            RobotPlayer.role = Role.ATTACKER;
+        rc.setIndicatorDot(homeLoc, 0, 0, 255);
+        if (!rc.getLocation().equals(homeLoc)) {
+            Pathfind.moveTowards(rc, homeLoc, true);
         }
-        else{
-            rc.setIndicatorDot(homeLoc, 0, 0, 255);
-            if (!rc.getLocation().equals(homeLoc)) {
-                Pathfind.moveTowards(rc, homeLoc, true);
-            }
 
-            // Warn teammates if there are enemies nearby
-            MapLocation curWarning = Communication.getLocation(rc, Communication.FLAG_WARNING_IDX);
-            if (nearbyEnemies.length > 0) {
-                if (curWarning == null)
-                    Communication.updateWarningInfo(rc, homeLoc, Communication.FLAG_WARNING_IDX);
-            } else if (curWarning != null && curWarning.equals(homeLoc)) {
-                Communication.updateWarningInfo(rc, null, Communication.FLAG_WARNING_IDX);
-            }
+        // Warn teammates if there are enemies nearby
+        MapLocation curWarning = Communication.getLocation(rc, Communication.FLAG_WARNING_IDX);
+        if (nearbyEnemies.length > 0) {
+            if (curWarning == null)
+                Communication.updateWarningInfo(rc, homeLoc, Communication.FLAG_WARNING_IDX);
+        } else if (curWarning != null && curWarning.equals(homeLoc)) {
+            Communication.updateWarningInfo(rc, null, Communication.FLAG_WARNING_IDX);
         }
     }
 
