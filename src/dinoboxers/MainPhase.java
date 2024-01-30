@@ -1,4 +1,4 @@
-package dinoboxer;
+package dinoboxers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,23 +68,15 @@ public class MainPhase {
         }
         MapLocation closestEnemy = findClosestLocation(rc.getLocation(), Arrays.asList(enemyLocs));
         if (closestEnemy != null){
-            if (rc.getLocation().distanceSquaredTo(closestEnemy) <= 4){ // attack then retreat
-                if (rc.canAttack(closestEnemy)) {
-                    rc.attack(closestEnemy);
-                }
-                if (rc.canMove(rc.getLocation().directionTo(closestEnemy).opposite())){
-                    rc.move(rc.getLocation().directionTo(closestEnemy).opposite());
-                }
-            }
-            else if (rc.getLocation().distanceSquaredTo(closestEnemy) <= 10 && rc.isActionReady()){ // approach then attack
+            if (rc.getLocation().distanceSquaredTo(closestEnemy) > 4){ // approach to attack
                 if (rc.canMove(rc.getLocation().directionTo(closestEnemy))){
                     rc.move(rc.getLocation().directionTo(closestEnemy));
                 }
-                if (rc.canAttack(closestEnemy)) {
-                    rc.attack(closestEnemy);
-                }
             }
-            else{ // get out of range
+            if (rc.canAttack(closestEnemy)) {
+                rc.attack(closestEnemy);
+            }
+            if (rc.getLocation().distanceSquaredTo(closestEnemy) <= 4){ // retreat after attacking to prevent enemy attack
                 if (rc.canMove(rc.getLocation().directionTo(closestEnemy).opposite())){
                     rc.move(rc.getLocation().directionTo(closestEnemy).opposite());
                 }
